@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "mythclient",
+  "version": "0.1.0",
+  "name": "Myth Client",
+  "description": "Modular client base: modules, settings, config saving, HUD and a click GUI.",
+  "authors": [],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.mythclient.MythClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "mixins": [
+    "mythclient.mixins.json"
+  ]
+}
