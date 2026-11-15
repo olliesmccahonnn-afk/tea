@@ -19,7 +19,6 @@ public class MythAddons implements ClientModInitializer {
         }
         add(dev.mythclient.module.render.GammaModule::new);
         add(dev.mythclient.module.render.ZoomModule::new);
-        add(dev.mythclient.module.render.ChunkBordersModule::new);
         add(dev.mythclient.module.hud.ArmorHudModule::new);
         add(dev.mythclient.module.hud.PotionHudModule::new);
         add(dev.mythclient.module.misc.NoSignEditModule::new);

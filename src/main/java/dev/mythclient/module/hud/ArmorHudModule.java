@@ -47,7 +47,7 @@ public class ArmorHudModule extends HudModule {
                     int left = s.getMaxDamage() - s.getDamage();
                     int pct = Math.round(100f * left / s.getMaxDamage());
                     ctx.drawText(mc.textRenderer, pct + "%", x + 20, ry + 4,
-                        pct > 50 ? 0xFF55FF55 : pct > 20 ? 0xFFFFAA00 : 0xFFFF5555, shadow.get());
+                        pct > 50 ? 0xFF55FF55 : pct > 20 ? 0xFFFFAA00 : 0xFFFF5555, true);
                 }
             }
             row++;

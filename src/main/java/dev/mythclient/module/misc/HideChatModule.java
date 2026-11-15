@@ -1,12 +1,14 @@
 package dev.mythclient.module.misc;
 
 import dev.mythclient.core.Category;
-import net.minecraft.client.option.ChatVisibility;
 
 /** Hides the chat while enabled (useful for clean screenshots or recording). Restores your setting on disable. */
-public class HideChatModule extends OptionModule<ChatVisibility> {
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class HideChatModule extends OptionModule {
     public HideChatModule() {
         super("Hide Chat", "Hides the chat window.", Category.MISC,
-              () -> mc.options.getChatVisibility(), ChatVisibility.HIDDEN);
+              () -> mc.options.getChatVisibility(), null);
     }
+
+    @Override protected Object target() { return enumConst(mc.options.getChatVisibility(), "HIDDEN"); }
 }

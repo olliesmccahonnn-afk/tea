@@ -21,6 +21,18 @@ public abstract class OptionModule<T> extends ClientModule {
         ClientLifecycleEvents.CLIENT_STOPPING.register(c -> restore());
     }
 
+    /** Value to force. Subclasses may override to resolve it lazily (e.g. enum constants looked up at runtime). */
+    protected T target() { return target; }
+
+    /** Finds an enum constant of an option's value type by name (falls back to the last constant), without naming the enum class. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    protected static Object enumConst(SimpleOption<?> opt, String name) {
+        Enum cur = (Enum) opt.getValue();
+        Object[] all = cur.getDeclaringClass().getEnumConstants();
+        for (Object o : all) if (((Enum) o).name().equals(name)) return o;
+        return all[all.length - 1];
+    }
+
     private void restore() {
         if (active) { option.get().setValue(saved); active = false; }
     }
@@ -28,12 +40,12 @@ public abstract class OptionModule<T> extends ClientModule {
     @Override protected void onEnable() {
         saved = option.get().getValue();
         active = true;
-        option.get().setValue(target);
+        option.get().setValue(target());
     }
 
     @Override protected void onDisable() { restore(); }
 
     @Override public void onTick() {
-        if (isEnabled() && active && !target.equals(option.get().getValue())) option.get().setValue(target);
+        if (isEnabled() && active && !target.equals(option.get().getValue())) option.get().setValue(target());
     }
 }
