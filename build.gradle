@@ -1,0 +1,36 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = 'dev.mythclient'
+base { archivesName = 'myth-client' }
+
+repositories {
+    mavenCentral()
+    // the prebuilt base client (no source available) lives in a tiny local maven repo
+    maven { url = uri("${projectDir}/libs/maven") }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Base Myth Client: Loom remaps it for compiling, and nests it inside the final jar (one jar to install)
+    modImplementation "dev.mythclient:myth-client-base:0.1.0"
+    include "dev.mythclient:myth-client-base:0.1.0"
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand 'version': project.version }
+}
+
+tasks.withType(JavaCompile).configureEach { options.release = 21 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
